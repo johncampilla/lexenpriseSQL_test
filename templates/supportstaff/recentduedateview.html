@@ -1,0 +1,95 @@
+{% extends 'base/supportstaffmenu.html' %}
+{% block title %} Case Folder Entry Form {% endblock %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block appname %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    {% include 'base/caseinfoheader.html' %}
+    <ul class="navbar-nav ml-auto mb-1">
+        <li>
+            <a href="{% url 'supportstaff-matter_review' matter.id %}" class="btn btn-primary btn-sm mt-3"><i
+                    class="fas fa-plus"></i>&nbsp;&nbsp;Go to Task Detail Review</a>
+        </li>
+    </ul>
+
+    <div class="card">
+        <div class="card-header text-center text-white bg-primary"> Due Date Details</div>
+        <!-- <div class="card-body"> -->
+        <div class="card text-white">
+            <div class="row mt-2">
+                <form method="POST">
+                    {% csrf_token %}
+                    <!-- {{ form | crispy }} -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="input-group input-group-sm mb-1">
+                                <span class="input-group-text" style="width: 110px; font-weight: bold;"> Matter</span>
+                                <input type="text" name="matter" value="{{matter}}" class="form-control" readonly>
+                            </div>
+                            <div class="input-group input-group-sm mb-1">
+                                <span class="input-group-text" style="width: 110px;font-weight: bold;">Due Date</span>
+                                <input type="text" name="duedate" value="{{duedate.duedate}}" class="form-control"
+                                    readonly>
+                            </div>
+                            <div class="input-group input-group-sm mb-1">
+                                <span class="input-group-text" style="width: 110px;font-weight: bold;">Lawyer</span>
+                                <input type="text" name="assignto" value="{{duedate.assignto}}" class="form-control"
+                                    readonly>
+                            </div>
+                            <div class="input-group input-group-sm mb-1">
+                                <span class="input-group-text"
+                                    style="width: 110px;font-weight: bold;">Particulars</span>
+                                <input type="text" name="particulars" value="{{duedate.particulars}}"
+                                    class="form-control" readonly>
+                            </div>
+                            <div class="input-group input-group-sm mb-1">
+                                <span class="input-group-text" style="width: 110px;font-weight: bold;">Date
+                                    Complied</span>
+                                <input type="text" name="date_complied" value="{{duedate.date_complied}}"
+                                    class="form-control" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card-header text-center text-white bg-primary">Activities</div>
+        <table class="table-hover table-bordered table-sm small table">
+            <!-- <table class="table-hover table-sm table-bordered small table table-dark table-striped">         -->
+            <thead class="text-center text-white" style="background-color:green;">
+                <tr>
+                    <th scope="col">Activity Date</th>
+                    <th scope="col">Document Type</th>
+                    <th scope="col">Tran Type</th>
+                    <th scope="col">Lawyer</th>
+                    <th scope="col">Task</th>
+                </tr>
+            </thead>
+            {% for activity in activity %}
+            <tr>
+                <td style="font-weight: bold;"><a href="{% url 'superstaff-activity-review' activity.id %}">
+                        {{ activity.tran_date }}</a></td>
+                <td style="font-weight: bold;">{{ activity.doc_type }}</td>
+                <td style="font-weight: bold;">{{ activity.tran_type }}</td>
+                <td style="font-weight: bold;">{{ activity.lawyer }}</td>
+                <td style="font-weight: bold;">{{ activity.task }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td style="font-weight:bold ;">Total count: {{activity_count}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+{% endblock content%}

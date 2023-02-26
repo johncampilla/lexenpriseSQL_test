@@ -1,0 +1,27 @@
+{% extends 'base/sysadminmenu.html' %}
+{% block title %} Case Folder Entry Form {% endblock %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block appname %}
+Dashboard
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-6 offset-md-3">
+            <div class="border bg-white p-3 bg-gradient-primary text-white">
+                <h3>New Folder</h3>
+                <hr>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{form|crispy}}
+                    <a class='btn btn-outline-primary btn-sm mb-1' href="{% url 'admin-folder-list' %}">Return</a>
+                    <input class='btn btn-outline-primary btn-sm mb-1' type="submit" value="Save Folder">
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

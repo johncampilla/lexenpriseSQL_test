@@ -1,0 +1,53 @@
+{% extends 'base/sysadminmenu.html' %}
+{% block title %} Clients {% endblock %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block appname %}
+Dashboard
+{% endblock %}
+{% block content %}
+<div id="content-wrapper" class="d-flex flex-column">
+    <!-- Main Content -->
+    <div id="content">
+        <!-- Topbar -->
+        <div class="container">
+            {% include 'base/adminappsnavbar.html' %}
+            <div class="row">
+                <div class="col">
+                    <div class="card-header text-white text-center bg-primary">Inbox Messages</div>
+                    <table class="table-hover table-bordered table-sm small table">
+                        <thead class="text-center text-white" style="background-color:green ;">
+                            <tr>
+                                <th style="width:10%;">Date</th>
+                                <th style="width:10%;">Message From</th>
+                                <th style="width:30%;">Subject</th>
+                                <th style="width:50%;">Message</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for messages in alertmessages %}
+                            <tr>
+                                <td style="font-weight: bold; text-align: center;"><a
+                                        href="{% url 'open_message' messages.id %}">
+                                        {{messages.messagedate | date:'m/d/Y'}}</a> </td>
+                                <td style="font-weight: bold;">{{messages.messagefrom}} </td>
+                                <td style="font-weight: bold;">{{messages.subject}}<a href="#">
+                                <td style="font-weight: bold;">{{messages.messagebox }}</td>
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                                <td style="font-weight:bold ;">Total Count: {{noofalerts}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base/managementmenu.html' %}
+{% block title %} Clients {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block appname %}
+Dashboard
+{% endblock %}
+{% block content %}
+<div class="container">
+    {% include 'base/manageappsnavbar.html' %}
+    <!-- Table -->
+    <table class="table-hover table-bordered table-sm small table">
+        <!-- <table class="table-hover table-sm table-bordered small table table-dark table-striped">         -->
+        <thead class="text-center text-white" style="background-color:grey ;">
+            <tr>
+                <th scope="col">Employee Name</th>
+                <th scope="col">Group</th>
+                <th scope="col">Hourly Rate</th>
+                <th scope="col">Address</th>
+                <th scope="col">Email</th>
+                <th scope="col">Mobile</th>
+            </tr>
+        </thead>
+        {% for emplist in emplist %}
+        <tr>
+            <!-- <td style="font-weight: bold;"><a href="{% url 'management-clientview' emplist.id %}">{{emplist.id}}</a>
+            </td> -->
+            <td style="font-weight: bold;"><a href="{% url 'employee-detail' emplist.id %}">
+                    {{ emplist.lawyer_name }}</a></td>
+            <td style="font-weight: bold;">{{ emplist.lawyerID.rank }}</td>
+            <td style="font-weight: bold; text-align:right ;">{{ emplist.hourlyrate }}</td>
+            <td style="font-weight: bold;">{{ emplist.lawyerID.address }}</td>
+            <td style="font-weight: bold;">{{ emplist.lawyerID.userid.email }}</td>
+            <td style="font-weight: bold;">{{ emplist.lawyerID.mobile }}</td>
+        </tr>
+        {% endfor %}
+        <tr class="text-white" style="background-color:grey ;">
+            <td>Total Count : {{empcount}} </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <!-- Pagination-->
+    <nav class="mt-1">
+        {% if clients.has_other_pages %}
+        <ul class="pagination justify-center-left">
+            {% if clients.has_previous %}
+            <a href="?page=1" class="btn btn-outline-primary mb-4"
+                style="width: 60px; border-radius: 1px; border: 1px solid #d1d1d1;">First</a>
+            <li class="page-item"><a class="page-link" href="?page={{ clients.previous_page_number }}"><i
+                        class="fas fa-angle-double-left"></i></a></li>
+            {% else %}
+            <li class="page-item disabled"></li>
+            {% endif %}
+
+            {% for i in clients.paginator.page_range %}
+            {% if clients.number == i %}
+            <li class="page-item active"><span class="page-link">{{ i }}<span class="sr-only"></span></span></li>
+            {% else %}
+            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+            {% endfor %}
+            {% if clients.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ clients.next_page_number }}"><i
+                        class="fas fa-angle-double-right"></i></a></li>
+            <a href="?page={{ clients.paginator.num_pages}}" class="btn btn-outline-primary mb-4"
+                style="width: 60px; border-radius: 1px; border: 1px solid #d1d1d1; border-left: none;">Last</a>
+            {% else %}
+            <li class="page-item disabled"></li>
+            {% endif %}
+        </ul>
+        {% endif %}
+    </nav>
+</div>
+{% endblock %}

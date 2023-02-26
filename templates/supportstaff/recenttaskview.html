@@ -1,0 +1,136 @@
+{% extends 'base/supportstaffmenu.html' %}
+{% block title %} Case Folder Entry Form {% endblock %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block appname %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    {% include 'base/caseinfoheader.html' %}
+
+    <!-- <div class="card"> -->
+    <div class="card">
+        <div class="card-header text-white text-center bg-primary"> Activity Detail </div>
+        <div class="row mt-2">
+            <form method="POST">
+                {% csrf_token %}
+                <!-- {{ form | crispy }} -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="input-group input-group-sm mb-1">
+                            <span class="input-group-text" style="width: 110px;font-weight: bold;">
+                                Matter</span>
+                            <input type="text" name="matter" value="{{matter}}" class="form-control" readonly>
+                        </div>
+                        <div class="input-group input-group-sm mb-1">
+                            <span class="input-group-text" style="width: 110px;font-weight: bold;">Activity
+                                Date</span>
+                            <input type="text" name="tran_date" value="{{task.tran_date}}" class="form-control"
+                                readonly>
+                        </div>
+                        <div class="input-group input-group-sm mb-1">
+                            <span class="input-group-text" style="width: 110px;font-weight:bold ;">Tran
+                                Type</span>
+                            <input type="text" name="tran_type" value="{{task.tran_type}}" class="form-control"
+                                readonly>
+                        </div>
+                        <div class="input-group input-group-sm mb-1">
+                            <span class="input-group-text" style="width: 110px; font-weight: bold;">DocType</span>
+                            <input type="text" name="doc_type" value="{{task.doc_type}}" class="form-control" readonly>
+                        </div>
+                        <div class="input-group input-group-sm mb-1">
+                            <span class="input-group-text" style="width: 110px;font-weight: bold;">Activity
+                                Codes</span>
+                            <input type="text" name="task_code" value="{{task.task_code}}" class="form-control"
+                                readonly>
+                        </div>
+                        <div class="input-group input-group-sm mb-1">
+                            <span class="input-group-text" style="width: 110px;font-weight: bold;">Prepared
+                                By</span>
+                            <input type="text" name="preparedby" value="{{task.preparedby}}" class="form-control"
+                                readonly>
+                        </div>
+                        <div class="input-group input-group-sm mb-1">
+                            <span class="input-group-text" style="width: 110px;font-weight: bold;">Lawyer</span>
+                            <input type="text" name="lawyer" value="{{task.lawyer}}" class="form-control" readonly>
+                        </div>
+                        <div class="input-group input-group-sm mb-1">
+                            <span class="input-group-text" style="width: 110px;font-weight: bold;">Activity</span>
+                            <textarea name="task" rows="2" class="form-control" readonly style="text-align:left;">
+                                    {{task.task}}
+                                    </textarea>
+                        </div>
+                        <div class="input-group input-group-sm mb-1">
+                            <span class="input-group-text" style="width: 110px;font-weight: bold;">Spent(hrs)</span>
+                            <input type="text" name="spentinhrs" value="{{task.spentinhrs}}" class="form-control"
+                                readonly>
+                        </div>
+                        <div class="input-group input-group-sm mb-1">
+                            <span class="input-group-text" style="width: 110px;font-weight: bold;">Spent
+                                (Mins)</span>
+                            <input type="text" name="spentinmin" value="{{task.spentinmin}}" class="form-control"
+                                readonly>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div>
+            <a class='btn btn-outline-primary btn-sm mt-1'
+                href="{% url 'superstaff-recent_adddocument' task.id m_id %}"> <i
+                    class="fa fa-paperclip fa-sm"></i>&nbsp;
+                Add Attachment</a>
+
+
+        </div>
+        <!-- Document List Table View -->
+        <div class="card-header text-white text-center bg-primary mt-2">Attachments</div>
+        <table class="table-hover table-bordered table-sm small table">
+            <!-- <table class="table-hover table-sm table-bordered small table table-dark table-striped">         -->
+            <thead class="text-center text-white" style="background-color:green ;">
+                <tr>
+                    <th style="width:5%;">Document Date</th>
+                    <th style="width:20%;">Attached BY</th>
+                    <th style="width:30%">Description</th>
+                    <th style="width:45%">Document</th>
+                </tr>
+            </thead>
+            {% for docs in listofdocs %}
+            <tr>
+                <td style="font-weight: bold;"><a href="{% url 'supportstaff-view_document' docs.id m_id task.id %}">
+                        {{ docs.DocDate | date:'m/d/Y' }}</a></td>
+                <td style="font-weight: bold;">{{ docs.createdby }}</td>
+                <td style="font-weight: bold;">{{ docs.Description }}</td>
+                <td style="font-weight: bold;">{{ docs.DocsPDF }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="card-header text-white text-center bg-primary mt-2"> Due Dates </div>
+        <table class="table-hover table-bordered table-sm small table">
+            <!-- <table class="table-hover table-sm table-bordered small table table-dark table-striped">         -->
+            <thead class="text-center text-white" style="background-color:green ;">
+                <tr>
+                    <th style="width:5%;">Due Date</th>
+                    <th style="width:5%;">Date Complied</th>
+                    <th style="width:90%;">Particulars</th>
+                </tr>
+            </thead>
+            {% for duedates in duedates %}
+            <tr>
+                <td style="font-weight: bold;">{{ duedates.duedate | date:'m/d/Y' }}</td>
+                <td style="font-weight: bold;">{{ duedates.date_complied | date:'m/d/Y' }}</td>
+                <td style="font-weight: bold;">{{ duedates.particulars }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+
+    </div>
+    <!-- </div> -->
+</div>
+
+{% endblock content%}

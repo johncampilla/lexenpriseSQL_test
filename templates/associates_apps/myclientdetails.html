@@ -1,0 +1,43 @@
+{% extends 'base/associatemenu.html' %}
+{% block title %} Matters {% endblock %}
+{% load crispy_forms_tags %}
+{% block appname %}
+Dashboard
+{% endblock %}
+{% block content %}
+<div class="container">
+    <!-- <div class="card border-secondary">     -->
+    {% include 'base/associatesnavbar.html' %}
+
+    {% include 'base/clientinfoheader.html' %}
+    <table class="table-hover table-bordered table-sm small table mt-3">
+        <thead class="text-center text-white" style="background-color:green ;">
+            <tr>
+                <th style="width:15%;">Case Type</th>
+                <th style="width:25%;">Matter Title</th>
+                <th style="width:10%;">Handling Lawyer</th>
+                <th style="width:10%;">Reference No.</th>
+                <th style="width:10%;">Filing Date</th>
+            </tr>
+        </thead>
+        {% for matter in matters %}
+        <tr>
+            <td style="font-weight: bold;text-align: center">{{ matter.case_type }}</td>
+            <td style="font-weight: bold;"><a href="{% url 'associate-matter-review' matter.id %}">
+                    {{matter.matter_title }}</a></td>
+            <td style="font-weight: bold;text-align: center;">{{ matter.handling_lawyer.access_code }}</td>
+            <td style="font-weight: bold;text-align: center">{{ matter.referenceno }}</td>
+            <td style="font-weight: bold;text-align: center">{{ matter.filing_date | date:'m/d/Y' }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td style="font-weight:bold ;">Total Count : {{ NoOfMatters }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+
+{% endblock %}

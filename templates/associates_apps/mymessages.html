@@ -1,0 +1,75 @@
+{% extends 'base/associatemenu.html' %}
+{% block title %} Clients {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block appname %}
+Dashboard
+{% endblock %}
+{% block content %}
+<div class="container">
+    {% include 'base/associatesnavbar.html' %}
+
+    <!-- Create Button & get username -->
+    <a href="{% url 'associate-new_message' %}" class="btn btn-outline-primary btn-sm"><i
+            class="fas fa-plus"></i>&nbsp;&nbsp; New Message</a>
+
+    <!-- input search + buttons search and reset -->
+    <form>
+        <div class="input-group input-group-sm mb-1 mt-2">
+            <input name="q" type="text" class="form-control" placeholder="Search for...">
+            <button class="btn btn-secondary"><i class="fas fa-search"></i></button>
+            <a href="{% url 'associate-my_messages' %}" class="btn btn-dark" style="margin: left 2px;"><i
+                    class="fas fa-sync-alt"></i></a>
+        </div>
+    </form>
+    <!-- Table -->
+    <div class="card-header text-center text-white bg-primary">Inbox</div>
+    <table class="table-hover table-bordered table-sm small table">
+        <!-- <table class="table-hover table-sm table-bordered small table table-dark table-striped">         -->
+        <thead class="text-white text-center" style="background-color:green ;">
+            <tr>
+                <th style="width:10%;">Date</th>
+                <th style="width:10%;">Sender</th>
+                <th style="width:20%;">Subject</th>
+                <th style="width:55%;">Message</th>
+                <th style="width:5%;">Status</th>
+            </tr>
+        </thead>
+        {% for items in receivedmessages %}
+        <tr>
+            <td style="font-weight: bold;"><a href="{% url 'associates-open_inboxmessage' items.id %}">
+                    {{ items.messagedate | date:'m/d/Y' }}</a></td>
+            <td style="font-weight: bold;">{{ items.messagefrom }}</td>
+            <td style="font-weight: bold;">{{ items.subject }}</td>
+            <td style="font-weight: bold;">{{ items.messagebox }}</td>
+            <td style="font-weight: bold;">{{ items.status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="card-header text-center text-white bg-primary">Sent Items</div>
+    <table class="table-hover table-bordered table-sm small table">
+        <!-- <table class="table-hover table-sm table-bordered small table table-dark table-striped">         -->
+        <thead class="text-white text-center" style="background-color:green ;">
+            <tr>
+                <th style="width:10%;">Date</th>
+                <th style="width:10%;">Sent To</th>
+                <th style="width:20%;">Subject</th>
+                <th style="width:55%;">Message</th>
+                <th style="width:5%;">Status</th>
+            </tr>
+        </thead>
+        {% for items in sentmessages %}
+        <tr>
+            <td style="font-weight: bold;"><a href="{% url 'associates-open_inboxmessage' items.id %}">
+                    {{ items.messagedate | date:'m/d/Y' }}</a></td>
+            <td style="font-weight: bold;">{{ items.messageto }}</td>
+            <td style="font-weight: bold;">{{ items.subject }}</td>
+            <td style="font-weight: bold;">{{ items.messagebox }}</td>
+            <td style="font-weight: bold;">{{ items.status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Pagination-->
+</div>
+{% endblock %}
