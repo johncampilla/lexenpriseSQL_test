@@ -23,11 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-icm-+0%f4rcd%3db(2y#6jp7mo36+m#s_@%nrcb#b2u8f9593&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-#DEBUG = False
+#DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
-#ALLOWED_HOSTS = ['syciplexenprise.azurewebsites.net']
+#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['syciplexenprise.azurewebsites.net']
 
 # Application definition
 
